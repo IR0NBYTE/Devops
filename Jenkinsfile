@@ -24,22 +24,6 @@ pipeline {
                 }
             }
         }
-
-steps {
-    script {
-        withKubeConfig([
-            credentialsId: 'jenkins',
-            caCertificate: '',
-            serverUrl: '<URL>',
-            contextName: '',
-            clusterName: '',
-            namespace: ''
-        ]) {
-            sh("kubectl get ns development || kubectl create ns development")
-        }
-    }
-}
-
         
         stage('Deploying Node container to Kubernetes') {
             script {
