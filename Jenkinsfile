@@ -29,7 +29,7 @@ pipeline {
             steps {
                 script {
                     withKubeConfig([
-                        credentialsId: 'kind',
+                        credentialsId: 'Kind',
                         caCertificate: '',
                         serverUrl: '127.0.0.1',
                         contextName: '',
