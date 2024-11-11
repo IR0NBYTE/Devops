@@ -26,16 +26,18 @@ pipeline {
         }
         
         stage('Deploying Node container to Kubernetes') {
-            script {
-                withKubeConfig([
-                    credentialsId: 'kind',
-                    caCertificate: '',
-                    serverUrl: '127.0.0.1',
-                    contextName: '',
-                    clusterName: '',
-                    namespace: ''
-                ]) {
-                    sh("kubectl apply -f deployment.yaml && kubectl apply -f service.yaml")
+            steps {
+                script {
+                    withKubeConfig([
+                        credentialsId: 'kind',
+                        caCertificate: '',
+                        serverUrl: '127.0.0.1',
+                        contextName: '',
+                        clusterName: '',
+                        namespace: ''
+                    ]) {
+                        sh("kubectl apply -f deployment.yaml && kubectl apply -f service.yaml")
+                    }
                 }
             }
             post{
