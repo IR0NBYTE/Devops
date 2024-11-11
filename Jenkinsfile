@@ -36,7 +36,7 @@ pipeline {
                         clusterName: '',
                         namespace: ''
                     ]) {
-                        sh("kubectl apply -f deployment.yaml && kubectl apply -f service.yaml")
+                        sh("kubectl apply -f deployment.yaml --validate=false && kubectl apply -f service.yaml --validate=false")
                     }
                 }
             }
