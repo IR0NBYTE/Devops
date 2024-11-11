@@ -24,5 +24,22 @@ pipeline {
                 }
             }
         }
+        stage('Deploying Node container to Kubernetes') {
+            steps {
+                script {
+                    kubernetesDeploy kubeconfigId: 'kind', configs: 'deployment.yaml', enableConfigSubstitution: true
+                    kubernetesDeploy kubeconfigId: 'kind', configs: 'service.yaml', enableConfigSubstitution: true
+                }
+            }
+            post{
+                success{
+                    echo "Successfully deployed to Kind"
+                }
+                failure{
+                    echo "Failed deploying to Kind"
+                }
+            }
+        }
+        
     }
 }
