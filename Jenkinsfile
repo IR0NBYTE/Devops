@@ -24,11 +24,34 @@ pipeline {
                 }
             }
         }
+
+steps {
+    script {
+        withKubeConfig([
+            credentialsId: 'jenkins',
+            caCertificate: '',
+            serverUrl: '<URL>',
+            contextName: '',
+            clusterName: '',
+            namespace: ''
+        ]) {
+            sh("kubectl get ns development || kubectl create ns development")
+        }
+    }
+}
+
+        
         stage('Deploying Node container to Kubernetes') {
-            steps {
-                script {
-                    kubernetesDeploy kubeconfigId: 'kind', configs: 'deployment.yaml', enableConfigSubstitution: true
-                    kubernetesDeploy kubeconfigId: 'kind', configs: 'service.yaml', enableConfigSubstitution: true
+            script {
+                withKubeConfig([
+                    credentialsId: 'kind',
+                    caCertificate: '',
+                    serverUrl: '127.0.0.1',
+                    contextName: '',
+                    clusterName: '',
+                    namespace: ''
+                ]) {
+                    sh("kubectl apply -f deployment.yaml && kubectl apply -f service.yaml")
                 }
             }
             post{
