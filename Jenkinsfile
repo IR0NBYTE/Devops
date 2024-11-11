@@ -31,7 +31,7 @@ pipeline {
                     withKubeConfig([
                         credentialsId: 'Kind',
                         caCertificate: '',
-                        serverUrl: '172.18.0.2',
+                        serverUrl: '172.18.0.2:6443',
                         contextName: '',
                         clusterName: '',
                         namespace: ''
