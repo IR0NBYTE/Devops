@@ -28,15 +28,7 @@ pipeline {
         stage('Deploying Node container to Kubernetes') {
             steps {
                 script {
-                    withKubeConfig([
-                        credentialsId: 'Kind',
-                        caCertificate: '',
-                        serverUrl: '172.18.0.2:6443',
-                        contextName: '',
-                        clusterName: '',
-                        namespace: ''
-                    ]) {
-                        sh("kubectl apply -f deployment.yaml --validate=false && kubectl apply -f service.yaml --validate=false")
+                        sh("kubectl apply -f deployment.yaml && kubectl apply -f service.yaml")
                     }
                 }
             }
