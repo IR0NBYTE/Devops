@@ -28,7 +28,7 @@ pipeline {
         stage('Deploying Node container to Kubernetes') {
             steps {
                 script {
-                        sh("kubectl replace -f deployment.yaml && kubectl replace -f service.yaml")
+                        sh("kubectl apply -f deployment.yaml && kubectl apply -f service.yaml")
                 }
             }
             post{
