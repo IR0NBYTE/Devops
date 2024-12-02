@@ -1,29 +1,33 @@
 pipeline {
     agent any
+    environment {
+        ARM_CLIENT_ID       = credentials('azure-client-id')
+        ARM_CLIENT_SECRET   = credentials('azure-client-secret')
+        ARM_SUBSCRIPTION_ID = credentials('azure-subscription-id')
+        ARM_TENANT_ID       = credentials('azure-tenant-id')
+    }
     stages {
-        stage('Tests') {
+        stage('Terraform Init') {
             steps {
-//                 script {
-//                    docker.image('node:10-stretch').inside { c ->
-                        echo 'Building..'
-                        sh 'npm install'
-                        echo 'Testing..'
-                        sh 'npm test'
-//                         sh "docker logs ${c.id}"
-//                    }
-//                 }
-            }
-        }
-        stage('Build and push docker image') {
-            steps {
-                script {
-                    def dockerImage = docker.build("ir0nbyte/node-demo:master")
-                    docker.withRegistry('', 'demo-docker') {
-                        dockerImage.push('master')
-                    }
+                dir('infrastructure') {
+                    sh 'terraform init'
                 }
             }
         }
-        
+        stage('Terraform Plan') {
+            steps {
+                dir('infrastructure') {
+                    sh 'terraform plan'
+                }
+            }
+        }
+        stage('Terraform Apply') {
+            steps {
+                dir('infrastructure') {
+                    sh 'terraform apply -auto-approve'
+                }
+            }
+        }
     }
 }
+
