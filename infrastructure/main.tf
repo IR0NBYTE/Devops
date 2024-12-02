@@ -8,9 +8,10 @@ resource "azurerm_service_plan" "main" {
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
 
-  sku_name            = "F1"  # Free Tier, change to Basic or higher if needed
-  tier                = "Free"  # Defines the pricing tier
-  os_type             = "Linux"  # Use "Windows" or "Linux" depending on your app's OS
+  sku_name            = "F1"  # Free Tier
+  capacity            = 1     # Minimum capacity (scale setting)
+
+  os_type             = "Linux"  # Or "Windows" depending on your app's requirements
 }
 
 resource "azurerm_app_service" "main" {
