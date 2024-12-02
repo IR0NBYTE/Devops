@@ -8,9 +8,7 @@ resource "azurerm_service_plan" "main" {
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
 
-  sku_name            = "F1"  # Free Tier
-  capacity            = 1     # Minimum capacity (scale setting)
-
+  sku_name            = "F1"  # Free Tier (no capacity setting required here)
   os_type             = "Linux"  # Or "Windows" depending on your app's requirements
 }
 
