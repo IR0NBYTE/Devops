@@ -8,7 +8,7 @@ resource "azurerm_service_plan" "main" {
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
 
-  sku_name            = "F1"  # Free Tier (no capacity setting required here)
+  sku_name            = "F1"  # Free Tier
   os_type             = "Linux"  # Or "Windows" depending on your app's requirements
 }
 
@@ -19,7 +19,7 @@ resource "azurerm_app_service" "main" {
   app_service_plan_id = azurerm_service_plan.main.id
 
   site_config {
-    node_version = "16-lts"  # Set the Node.js version for your app
+    linux_fx_version = "NODE|16-lts"  # Specify Node.js version for Linux
   }
 
   app_settings = {
