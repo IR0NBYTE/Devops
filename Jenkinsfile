@@ -25,21 +25,5 @@ pipeline {
             }
         }
         
-        stage('Deploying Node container to Kubernetes') {
-            steps {
-                script {
-                        sh("kubectl apply -f deployment.yaml && kubectl apply -f service.yaml")
-                }
-            }
-            post{
-                success{
-                    echo "Successfully deployed to Kind"
-                }
-                failure{
-                    echo "Failed deploying to Kind"
-                }
-            }
-        }
-        
     }
 }
