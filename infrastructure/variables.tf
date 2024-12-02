@@ -18,4 +18,3 @@ variable "app_package_url" {
   description = "URL of the deployment package (.zip)"
   default     = "https://github.com/IR0NBYTE/Devops/blob/main/nodejs-app.zip"  # Update with your package URL
 }
-

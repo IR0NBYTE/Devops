@@ -3,8 +3,7 @@ resource "azurerm_resource_group" "main" {
   location = var.location
 }
 
-
-resource "azurerm_app_service_plan" "main" {
+resource "azurerm_service_plan" "main" {
   name                = var.app_service_plan_name
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
@@ -18,12 +17,10 @@ resource "azurerm_app_service" "main" {
   name                = var.app_service_name
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
-  app_service_plan_id = azurerm_app_service_plan.main.id
+  app_service_plan_id = azurerm_service_plan.main.id
 
   site_config {
-    application_stack {
-      node_version = "16-lts"  # Change to the Node.js version you need
-    }
+    node_version = "16-lts"  # Set the Node.js version for your app
   }
 
   app_settings = {
@@ -33,5 +30,3 @@ resource "azurerm_app_service" "main" {
     "MY_CUSTOM_VARIABLE" = "my-value"
   }
 }
-
-
